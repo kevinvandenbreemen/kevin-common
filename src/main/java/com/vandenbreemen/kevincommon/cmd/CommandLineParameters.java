@@ -18,6 +18,10 @@ public class CommandLineParameters {
         for(String element : parameters) {
             if(element.startsWith("-")) {
 
+                if(currentArgument != null) {
+                    rawArguments.put(currentArgument, currentValue.trim());
+                }
+
                 Pattern dashPattern = Pattern.compile("([-]*)");
                 Matcher matcher = dashPattern.matcher(element);
                 if(matcher.find()) {

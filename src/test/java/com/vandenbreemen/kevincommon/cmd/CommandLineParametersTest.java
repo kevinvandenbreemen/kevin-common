@@ -50,4 +50,15 @@ class CommandLineParametersTest {
         assertEquals("/home/john/testbed/init.dat", params.getArgument("f"));
     }
 
+    @Test
+    public void shouldParseMultipleArguments() {
+        String[] parms = new String[] {
+                "-f", "test", "-b", "build"
+        };
+
+        CommandLineParameters params = new CommandLineParameters(parms);
+        assertEquals("test", params.getArgument("f"));
+        assertEquals("build", params.getArgument("b"));
+    }
+
 }
