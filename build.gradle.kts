@@ -1,6 +1,7 @@
 plugins {
     java
     `maven-publish`
+    `java-library`
 }
 
 group = "com.vandenbreemen"
