@@ -41,4 +41,8 @@ public class CommandLineParameters {
     public String getArgument(String argName) {
         return rawArguments.get(argName);
     }
+
+    public boolean flag(String flagName) {
+        return rawArguments.containsKey(flagName);
+    }
 }

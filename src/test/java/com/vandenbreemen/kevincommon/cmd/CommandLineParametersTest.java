@@ -32,4 +32,22 @@ class CommandLineParametersTest {
         assertEquals("help me", params.getArgument("c"));
     }
 
+    @Test
+    public void shouldProvideForFlags() {
+        String[] parameters = new String[]{
+                "testFile", "-F", "fred"
+        };
+        CommandLineParameters params = new CommandLineParameters(parameters);
+        assertTrue(params.flag("F"));
+    }
+
+    @Test
+    public void realWorldTest() {
+        String[] parameters = new String[]{
+                "-f", "/home/john/testbed/init.dat"
+        };
+        CommandLineParameters params = new CommandLineParameters(parameters);
+        assertEquals("/home/john/testbed/init.dat", params.getArgument("f"));
+    }
+
 }
