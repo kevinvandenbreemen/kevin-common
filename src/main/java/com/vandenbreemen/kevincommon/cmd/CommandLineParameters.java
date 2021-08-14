@@ -3,6 +3,8 @@ package com.vandenbreemen.kevincommon.cmd;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class CommandLineParameters {
 
@@ -15,7 +17,15 @@ public class CommandLineParameters {
         String currentValue = null;
         for(String element : parameters) {
             if(element.startsWith("-")) {
-                currentArgument = element.substring(1);
+
+                Pattern dashPattern = Pattern.compile("([-]*)");
+                Matcher matcher = dashPattern.matcher(element);
+                if(matcher.find()) {
+                    String group = matcher.group(1);
+                    currentArgument = element.substring(group.length());
+                } else {
+                    currentArgument = element.substring(1);
+                }
                 currentValue = "";
             } else {
                 currentValue += " ";

@@ -22,4 +22,14 @@ class CommandLineParametersTest {
         assertNull(params.getArgument("h"));
     }
 
+    @Test
+    public void shouldHandleDoubleDashParameter() {
+        String[] parameters = new String[]{
+                "--c",
+                "help", "me"
+        };
+        CommandLineParameters params = new CommandLineParameters(parameters);
+        assertEquals("help me", params.getArgument("c"));
+    }
+
 }
