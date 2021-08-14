@@ -20,6 +20,7 @@ tasks.getByName<Test>("test") {
     useJUnitPlatform()
 }
 
+//  Based on https://github.com/gradle/kotlin-dsl-samples/blob/master/samples/maven-publish/build.gradle.kts
 val sourcesJar by tasks.registering(Jar::class) {
     classifier = "sources"
     from(sourceSets.main.get().allSource)
