@@ -76,6 +76,21 @@ class CommandLineParametersTest {
     }
 
     @Test
+    public void shouldProvideForSelfDocumentationMultiline() {
+        String[] parms = new String[] {
+                "-f", "test", "-b", "build"
+        };
+
+        CommandLineParameters params = new CommandLineParameters(parms);
+        params.addRequired("f", "filename to use");
+        params.addRequired("g", "Golf");
+
+        String documentation = params.document();
+        assertEquals("Usage:\n-f\tfilename to use\n-g\tGolf", documentation.trim());
+
+    }
+
+    @Test
     public void shouldProvideForValidation(){
         String[] parms = new String[] {
                 "-g", "test", "-b", "build"

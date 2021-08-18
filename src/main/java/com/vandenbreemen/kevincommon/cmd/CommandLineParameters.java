@@ -59,7 +59,7 @@ public class CommandLineParameters {
     public String document() {
         StringBuilder bld = new StringBuilder("Usage:\n");
         requiredArguments.entrySet().forEach(flagToDocumentation ->
-                bld.append("-").append(flagToDocumentation.getKey()).append("\t").append(flagToDocumentation.getValue())
+                bld.append("-").append(flagToDocumentation.getKey()).append("\t").append(flagToDocumentation.getValue()).append("\n")
                 );
 
         return bld.toString();
