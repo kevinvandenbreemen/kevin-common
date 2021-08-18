@@ -61,4 +61,40 @@ class CommandLineParametersTest {
         assertEquals("build", params.getArgument("b"));
     }
 
+    @Test
+    public void shouldProvideForSelfDocumentation() {
+        String[] parms = new String[] {
+                "-f", "test", "-b", "build"
+        };
+
+        CommandLineParameters params = new CommandLineParameters(parms);
+        params.addRequired("f", "filename to use");
+
+        String documentation = params.document();
+        assertEquals("Usage:\n-f\tfilename to use", documentation);
+
+    }
+
+    @Test
+    public void shouldProvideForValidation(){
+        String[] parms = new String[] {
+                "-g", "test", "-b", "build"
+        };
+
+        CommandLineParameters params = new CommandLineParameters(parms);
+        params.addRequired("f", "filename to use");
+
+        assertFalse(params.validate());
+    }
+
+    @Test
+    public void shouldAllowValidParametersThrough() {
+        String[] parms = new String[] {
+                "-f", "test", "-b", "build"
+        };
+
+        CommandLineParameters params = new CommandLineParameters(parms);
+        assertTrue(params.validate());
+    }
+
 }

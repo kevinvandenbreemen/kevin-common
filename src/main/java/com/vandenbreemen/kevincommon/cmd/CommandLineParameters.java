@@ -9,8 +9,10 @@ import java.util.regex.Pattern;
 public class CommandLineParameters {
 
     private HashMap<String, String> rawArguments;
+    private HashMap<String, String> requiredArguments;
 
     public CommandLineParameters(String[] parameters) {
+        this.requiredArguments = new HashMap<>();
         rawArguments = new HashMap<>();
 
         String currentArgument = null;
@@ -48,5 +50,25 @@ public class CommandLineParameters {
 
     public boolean flag(String flagName) {
         return rawArguments.containsKey(flagName);
+    }
+
+    public void addRequired(String parameterFlag, String documentation) {
+        requiredArguments.put(parameterFlag, documentation);
+    }
+
+    public String document() {
+        StringBuilder bld = new StringBuilder("Usage:\n");
+        requiredArguments.entrySet().forEach(flagToDocumentation ->
+                bld.append("-").append(flagToDocumentation.getKey()).append("\t").append(flagToDocumentation.getValue())
+                );
+
+        return bld.toString();
+    }
+
+    public boolean validate() {
+        if(requiredArguments.keySet().stream().filter(k->!this.flag(k)).findAny().isPresent()){
+            return false;
+        }
+        return true;
     }
 }
