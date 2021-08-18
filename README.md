@@ -31,3 +31,12 @@ if(!params.validate()){ //  If the arguments weren't valid print out some usage 
     System.out.println(params.document());
 }
 ```
+
+### Documenting situations where at least one of a group of parameters is required
+You can indicate that "at least one of..." parameters is required using the ```addAtLeast()``` method, as in:
+
+```
+        CommandLineParameters p = new CommandLineParameters(parms);
+        p.addAtLeast("f", "File name to process");
+        p.addAtLeast("d", "Dir to process");
+```
