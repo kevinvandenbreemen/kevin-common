@@ -112,4 +112,29 @@ class CommandLineParametersTest {
         assertTrue(params.validate());
     }
 
+    @Test
+    public void shouldAllowProvidingAtLeastOneOf() {
+        String[] parms = new String[] {
+                "-f", "test", "-b", "build"
+        };
+        CommandLineParameters p = new CommandLineParameters(parms);
+        p.addAtLeast("f", "File name to process");
+        p.addAtLeast("d", "Dir to process");
+
+        assertTrue(p.validate());
+    }
+
+    @Test
+    public void shouldValidateThatAtLeastOneOfTheRequiredIsPresent() {
+        String[] parms = new String[] {
+                "-b", "build"
+        };
+        CommandLineParameters p = new CommandLineParameters(parms);
+        p.addAtLeast("f", "File name to process");
+        p.addAtLeast("d", "Dir to process");
+
+        assertFalse(p.validate());
+        System.out.println(p.document());
+    }
+
 }

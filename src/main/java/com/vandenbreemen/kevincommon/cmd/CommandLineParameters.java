@@ -11,9 +11,15 @@ public class CommandLineParameters {
     private HashMap<String, String> rawArguments;
     private HashMap<String, String> requiredArguments;
 
+    /**
+     * At least one of these should be provided
+     */
+    private HashMap<String, String> oneOfArguments;
+
     public CommandLineParameters(String[] parameters) {
         this.requiredArguments = new HashMap<>();
         rawArguments = new HashMap<>();
+        this.oneOfArguments = new HashMap<>();
 
         String currentArgument = null;
         String currentValue = null;
@@ -61,6 +67,12 @@ public class CommandLineParameters {
         requiredArguments.entrySet().forEach(flagToDocumentation ->
                 bld.append("-").append(flagToDocumentation.getKey()).append("\t").append(flagToDocumentation.getValue()).append("\n")
                 );
+        if(!oneOfArguments.isEmpty()) {
+            bld.append("One of:\n");
+            oneOfArguments.entrySet().forEach(flagToDocumentation->
+                bld.append("-").append(flagToDocumentation.getKey()).append("\t").append(flagToDocumentation.getValue()).append("\n")
+            );
+        }
 
         return bld.toString();
     }
@@ -69,6 +81,15 @@ public class CommandLineParameters {
         if(requiredArguments.keySet().stream().filter(k->!this.flag(k)).findAny().isPresent()){
             return false;
         }
+        if(!oneOfArguments.isEmpty()) {
+            if(!oneOfArguments.keySet().stream().filter(this::flag).findAny().isPresent()){
+                return false;
+            }
+        }
         return true;
+    }
+
+    public void addAtLeast(String parameterFlag, String documentation) {
+        oneOfArguments.put(parameterFlag, documentation);
     }
 }
