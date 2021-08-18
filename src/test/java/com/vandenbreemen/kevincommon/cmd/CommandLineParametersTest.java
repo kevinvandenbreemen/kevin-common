@@ -71,7 +71,7 @@ class CommandLineParametersTest {
         params.addRequired("f", "filename to use");
 
         String documentation = params.document();
-        assertEquals("Usage:\n-f\tfilename to use", documentation);
+        assertEquals("Usage:\n-f\tfilename to use", documentation.trim());
 
     }
 
