@@ -40,3 +40,36 @@ You can indicate that "at least one of..." parameters is required using the ```a
         p.addAtLeast("f", "File name to process");
         p.addAtLeast("d", "Dir to process");
 ```
+
+## No-Bullshit Logging
+
+Logging framework without the hassle of missing configuration files or build path bullshit.  It's written in Kotlin but usable from Java.
+
+Currently the logger prints logs with a date/time, a level, and whatever message you wish to log.
+
+### Initializing the System
+```
+Logger.configuration().level = Level.TRACE
+```
+
+### Getting a Logger
+```
+val logger = Logger.getLogger(MyClass::class.java)
+```
+
+You can also use a regular string as in:
+
+```
+val logger = Logger.getLogger("my-logger")
+```
+
+### Logging
+
+```
+
+//  Log an exception
+logger.error (error){ "FATAL ERROR OCCURRED" }
+
+//  Regular logging
+logger.info { "This is an info" }
+```
