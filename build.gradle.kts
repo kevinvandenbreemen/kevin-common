@@ -1,11 +1,14 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     java
     `maven-publish`
     `java-library`
+    kotlin("jvm") version "1.7.0"
 }
 
 group = "com.vandenbreemen"
-version = "1.0.6.1000"
+version = "1.0.7.0000"
 
 repositories {
     mavenCentral()
@@ -14,6 +17,7 @@ repositories {
 dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.0")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+    implementation(kotlin("stdlib-jdk8"))
 }
 
 tasks.getByName<Test>("test") {
@@ -33,4 +37,12 @@ publishing {
             artifact(sourcesJar.get())
         }
     }
+}
+val compileKotlin: KotlinCompile by tasks
+compileKotlin.kotlinOptions {
+    jvmTarget = "1.8"
+}
+val compileTestKotlin: KotlinCompile by tasks
+compileTestKotlin.kotlinOptions {
+    jvmTarget = "1.8"
 }
