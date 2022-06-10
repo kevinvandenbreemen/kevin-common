@@ -9,6 +9,10 @@ class Logger(private val name: String) {
 
     companion object {
 
+        private val configuration = NBLConfiguration(
+            Level.INFO
+        )
+
         val initialized by lazy {
             println("""
                        XXXXXXXX
@@ -32,21 +36,34 @@ class Logger(private val name: String) {
                    XXXXXX/   \XXXXXXXX       |____|
                         |_____|XX
             """.trimIndent())
-            println("No Bullshit Logging has been activated.  Happy logging!")
+            println(" \uD83D\uDCA9\uD83D\uDCA9\uD83D\uDCA9 No Bullshit Logging has been activated.  Happy logging!")
+        }
+
+        fun configuration(): NBLConfiguration {
+            return configuration
         }
 
         fun getLogger(name: String): Logger {
             initialized
-            return Logger(name)
+            val logger = Logger(name)
+            logger.level = configuration.level
+            return logger
         }
 
         fun getLogger(clazz: Class<*>): Logger {
-            initialized
             return getLogger(clazz.canonicalName)
         }
     }
 
     private var level: Level = Level.INFO
+
+    /**
+     * Override the logging level.  I suggest you use Logger.conifiguration.setLevel() for this.
+     */
+    fun setLevel(level: Level): Logger {
+        this.level = level
+        return this
+    }
 
     private fun doLog(message: () -> String, level: Level) {
         val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS")
@@ -85,7 +102,11 @@ class Logger(private val name: String) {
 }
 
 fun main() {
+
+    Logger.configuration().level = Level.TRACE
+
     with(Logger.getLogger(Level::class.java)) {
+
         info { "INFO" }
         debug { "DEBUG" }
         trace { "TRACE" }
